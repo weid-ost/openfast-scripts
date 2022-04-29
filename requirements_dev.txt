@@ -1,0 +1,13 @@
+# Testing
+pytest
+pytest-cov
+
+# Linting
+flake8
+
+# Tools for building the package
+setuptools
+wheel
+
+# Documentation (if needed)
+# sphinx

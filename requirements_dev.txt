@@ -3,7 +3,7 @@ pytest
 pytest-cov
 
 # Linting
-flake8
+black
 
 # Tools for building the package
 setuptools

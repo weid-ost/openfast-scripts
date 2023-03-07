@@ -56,3 +56,7 @@ venv_*
 # Spyder project settings
 .spyderproject
 .spyproject
+
+
+*.csv
+*.nc

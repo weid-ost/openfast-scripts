@@ -40,8 +40,11 @@ def uniform_wind():
     }
     df = pd.DataFrame(data)
 
-    df.to_csv(f"Sinus_ws{ws_mean}_a{amplitude}_f{freq}.csv", index=False, header=None)
+    df.to_csv(
+        f"Sinus_ws{ws_mean}_a{amplitude}_f{freq}.csv", index=False, header=None
+    )
 
 
 if __name__ == "__main__":
     uniform_wind()
+    # pass

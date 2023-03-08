@@ -1,0 +1,24 @@
+# YAML file for configuring the case generation
+case:
+  name: power_curve
+  ref_dir: /home/florian/Projects/openfast-scripts/aventa_ref_dir/ref_folder
+  case_dir: /home/florian/Projects/openfast-scripts/aventa_ref_dir/power_curve
+  main_file: runAventa.fst
+  fast_exe:
+  turbsim_exe:
+  inputs:
+    seed: 20230307
+    turbine:
+      cut_in: 2.0
+      cut_out: 14.0
+    wind:
+      weibull:
+        A: 6.0
+        k: 2.0
+      turb_int_ref:
+        mean: 18.0
+        sd: 7.0
+      yaw_error:
+        mean: 0.0
+        sd: 5.0
+    n_inputs: 4

@@ -1,10 +1,15 @@
 import os
+from decimal import Decimal, getcontext
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pyFAST.case_generation.case_gen as case_gen
 import pyFAST.case_generation.runner as runner
+from pyFAST.input_output import FASTInputFile
 from scipy.stats import norm, qmc, weibull_min
+
+from pyOF.utils import yaml_load
 
 
 def yaw_misalignment():
@@ -65,66 +70,156 @@ def yaw_misalignment():
     )
     print(fastfiles)
 
-    # # --- Running the simulations
-    # runner.run_fastfiles(
-    #     fastfiles, fastExe=FAST_EXE, parallel=True, showOutputs=False, nCores=2
+    # --- Running the simulations
+    runner.run_fastfiles(
+        fastfiles, fastExe=FAST_EXE, parallel=True, showOutputs=False, nCores=2
+    )
+
+
+def turb_sim_inflow(
+    config: dict,
+    fastfiles: list[str],
+    wind_speeds: list[float],
+    turb_ints: list[float],
+) -> None:
+    """Modify TurbSim parameters and write"""
+
+    ref_file = (
+        Path(config["case"]["ref_dir"]) / "Aventa/Wind/_TURBSIM_INPUTS.inp"
+    )
+
+    for fastfile, wind_speed, turb_int in zip(
+        fastfiles, wind_speeds, turb_ints
+    ):
+        fast_input_path = Path(fastfile)
+        fast_input = FASTInputFile(fast_input_path)
+
+        inflow_file_path = str(
+            fast_input_path.parent / fast_input["InflowFile"].strip('"')
+        )
+        inflow_file = FASTInputFile(inflow_file_path)
+
+        turb_file = f"{Path(inflow_file['Filename']).with_suffix('')}.inp"
+
+        fast_input = FASTInputFile(ref_file)
+        fast_input["URef"] = wind_speed
+        fast_input["IECturbc"] = turb_int
+
+        fast_input.write(fast_input_path.parent / "Aventa" / turb_file)
+
+    # """Run TurbSim"""
+    # turbsim_file = os.path.join(
+    #     MyDir, "../tests/example_files/FASTIn_TurbSim_change.dat"
+    # )  # Input file
+    # Turbsim_EXE = os.path.join(
+    #     MyDir, "../../../../openfast/build/bin/TurbSim_x64.exe"
+    # )  # Change to the path of the TurbSim executable
+    # runner.run_cmd(
+    #     TurbSim_FILE,
+    #     Turbsim_EXE,
+    #     wait=True,
+    #     showOutputs=False,
+    #     showCommand=True,
     # )
 
 
-def power_curve_lhc():
-    # --- Parameters for this script
-    # FAST_EXE = "/home/florian/OpenFAST/install/bin/openfast"  # Command used in SLURM submission script
-    # base_dir = "/home/florian/Projects/openfast_aventa/OpenFAST/"
+def simulation_input(config: dict) -> list[float]:
+    inputs = config["case"]["inputs"]
 
-    # # Folder where the fast input files are located (will be copied)
-    # ref_dir = os.path.join(base_dir, "ref_folder")
+    sampler = qmc.Sobol(d=3, scramble=True, seed=inputs["seed"])
 
-    # # Main file in ref_dir, used as a template
-    # main_file = "runAventa.fst"
+    n_inputs = int(np.round(np.log2(inputs["n_inputs"])))
+    sample = sampler.random_base2(n_inputs)
 
-    # # Output folder (will be created)
-    # work_dir = os.path.join(base_dir, "_Aventa_Yaw_Study_2/")
+    a = 2 * inputs["wind"]["weibull"]["A"] / np.sqrt(np.pi)
+    k = inputs["wind"]["weibull"]["k"]
 
-    # # --- Defining the parametric study  (list of dictionaries with keys as FAST parameters)
-    # base_dict = {}
+    bounds = weibull_min.cdf(
+        [inputs["turbine"]["cut_in"], inputs["turbine"]["cut_out"]],
+        k,
+        loc=0,
+        scale=a,
+    )
 
-    sampler = qmc.Sobol(d=4, scramble=True, seed=20230307)
-    sample = sampler.random_base2(7)
-
-    a, k = 2 * 6.0 / np.sqrt(np.pi), 2.0
-
-    bounds = weibull_min.cdf([2, 14], k, loc=0, scale=a)
-
-    # Wind speed, yaw error, turbulence intensity, turbulence length scale
-    l_bounds = [bounds[0], 0, 0, 0]
-    u_bounds = [bounds[1], 1, 1, 1]
+    # Wind speed, yaw error and turbulence intensity
+    l_bounds = [bounds[0], 0, 0]
+    u_bounds = [bounds[1], 1, 1]
 
     sample = qmc.scale(sample, l_bounds, u_bounds)
 
     wind_speed = weibull_min.ppf(sample[:, 0], k, scale=a)
-    yaw_error = norm.ppf(sample[:, 1], scale=2)
-    turb_int = norm.ppf(sample[:, 2], loc=10, scale=2)
-    turb_len_scale = norm.ppf(sample[:, 3], loc=0.2, scale=0.02)
+    yaw_error = norm.ppf(sample[:, 1], scale=inputs["wind"]["yaw_error"]["sd"])
+    turb_int = norm.ppf(
+        sample[:, 2],
+        loc=inputs["wind"]["turb_int_ref"]["mean"],
+        scale=inputs["wind"]["turb_int_ref"]["sd"],
+    )
 
-    plt.hist(turb_int, bins=40)
-    # plt.scatter(x, u)
-    plt.savefig("test.png", dpi=300)
-
-    # deg_incr = 30
-    # wind_dirs = np.arange(-30, 30 + deg_incr, deg_incr)
-    # params = []
-
-    # base_dict["InflowFile|WindVxiList"] = [0, 0]
-    # base_dict["InflowFile|WindVyiList"] = [0, 0]
-    # base_dict["InflowFile|WindVziList"] = [18.0, 16.0]
-
-    # for i, wind_dir in enumerate(wind_dirs):
-    #     p = base_dict.copy()
-
-    #     p["InflowFile|PropagationDir"] = wind_dir
-    #     p["__name__"] = f"{i:03d}_wd{wind_dir:04.1f}"
-    #     params.append(p)
+    return wind_speed, yaw_error, turb_int
 
 
-if __name__ == "__main__":
-    yaw_misalignment()
+def power_curve():
+    config_path = Path(__file__).parent
+    config = yaml_load(config_path / "case_gen_config.yaml")
+
+    # --- Parameters for this script
+    fast_exe = config["case"][
+        "fast_exe"
+    ]  # Command used in SLURM submission script
+
+    # Folder where the fast input files are located (will be copied)
+    ref_dir = config["case"]["ref_dir"]
+
+    # Main file in ref_dir, used as a template
+    main_file = config["case"]["main_file"]
+
+    # # Output folder (will be created)
+    work_dir = config["case"]["case_dir"]
+
+    wind_speeds, yaw_errors, turb_ints = simulation_input(config)
+
+    plot_distributions(wind_speeds, yaw_errors, turb_ints)
+
+    # # --- Defining the parametric study  (list of dictionaries with keys as FAST parameters)
+    base_dict = {}
+
+    params = []
+
+    getcontext().prec = 4
+
+    for wind_speed, yaw_error, turb_int in zip(
+        wind_speeds, yaw_errors, turb_ints
+    ):
+        p = base_dict.copy()
+
+        p[
+            "InflowFile|Filename"
+        ] = f"Wind/_TURBSIM_INPUTS_{wind_speed:.1f}_{turb_int:.1f}.bts"
+        p["InflowFile|m/s"] = Decimal(wind_speed) * 1
+        p["InflowFile|PropagationDir"] = Decimal(yaw_error) * 1
+        p[
+            "__name__"
+        ] = f"ws-{wind_speed:.1f}_wd-{yaw_error:.1f}_ti-{turb_int:.1f}"
+        params.append(p)
+
+    # --- Generating all files in a workdir
+    fastfiles = case_gen.templateReplace(
+        params,
+        ref_dir,
+        outputDir=work_dir,
+        removeRefSubFiles=True,
+        main_file=main_file,
+        oneSimPerDir=True,
+    )
+
+    turb_sim_inflow(config, fastfiles, wind_speeds, turb_ints)
+
+
+def plot_distributions(
+    wind_speed: list[float], yaw_error: list[float], turb_int: list[float]
+) -> None:
+    _, axes = plt.subplots(3, 1, figsize=(10, 10))
+    axes[0].hist(wind_speed)
+    axes[1].hist(yaw_error)
+    axes[2].hist(turb_int)
+    plt.savefig("plots/distributions.png", dpi=300)

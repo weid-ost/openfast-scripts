@@ -62,4 +62,5 @@ omit = ["pyOF/__about__.py"]
 only-include = ["pyOF"]
 
 [project.scripts]
-power_curve = "pyOF.cases:power_curve"
+generate_power_curve_case = "pyOF.cases:generate_power_curve_case"
+generate_turb_sim_bts = "pyOF.cases:generate_turb_sim_bts"

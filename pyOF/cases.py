@@ -9,7 +9,7 @@ import pyFAST.case_generation.runner as runner
 from pyFAST.input_output import FASTInputFile
 from scipy.stats import norm, qmc, weibull_min
 
-from pyOF.utils import yaml_load
+from pyOF.utils import RedirectStdout, yaml_load
 
 
 def yaw_misalignment():
@@ -91,36 +91,14 @@ def turb_sim_inflow(
     for fastfile, wind_speed, turb_int in zip(
         fastfiles, wind_speeds, turb_ints
     ):
-        fast_input_path = Path(fastfile)
-        fast_input = FASTInputFile(fast_input_path)
+        turb_file = get_turb_sim_input_path(fastfile=fastfile)
 
-        inflow_file_path = str(
-            fast_input_path.parent / fast_input["InflowFile"].strip('"')
-        )
-        inflow_file = FASTInputFile(inflow_file_path)
+        fast_ref_input = FASTInputFile(ref_file)
+        fast_ref_input["URef"] = wind_speed
+        fast_ref_input["IECturbc"] = turb_int
 
-        turb_file = f"{Path(inflow_file['Filename']).with_suffix('')}.inp"
-
-        fast_input = FASTInputFile(ref_file)
-        fast_input["URef"] = wind_speed
-        fast_input["IECturbc"] = turb_int
-
-        fast_input.write(fast_input_path.parent / "Aventa" / turb_file)
-
-    # """Run TurbSim"""
-    # turbsim_file = os.path.join(
-    #     MyDir, "../tests/example_files/FASTIn_TurbSim_change.dat"
-    # )  # Input file
-    # Turbsim_EXE = os.path.join(
-    #     MyDir, "../../../../openfast/build/bin/TurbSim_x64.exe"
-    # )  # Change to the path of the TurbSim executable
-    # runner.run_cmd(
-    #     TurbSim_FILE,
-    #     Turbsim_EXE,
-    #     wait=True,
-    #     showOutputs=False,
-    #     showCommand=True,
-    # )
+        case_path = Path(fastfile)
+        fast_ref_input.write(case_path.parent / "Aventa" / turb_file)
 
 
 def simulation_input(config: dict) -> list[float]:
@@ -158,14 +136,9 @@ def simulation_input(config: dict) -> list[float]:
     return wind_speed, yaw_error, turb_int
 
 
-def power_curve():
+def generate_power_curve_case():
     config_path = Path(__file__).parent
     config = yaml_load(config_path / "case_gen_config.yaml")
-
-    # --- Parameters for this script
-    fast_exe = config["case"][
-        "fast_exe"
-    ]  # Command used in SLURM submission script
 
     # Folder where the fast input files are located (will be copied)
     ref_dir = config["case"]["ref_dir"]
@@ -202,17 +175,61 @@ def power_curve():
         ] = f"ws-{wind_speed:.1f}_wd-{yaw_error:.1f}_ti-{turb_int:.1f}"
         params.append(p)
 
-    # --- Generating all files in a workdir
-    fastfiles = case_gen.templateReplace(
-        params,
-        ref_dir,
-        outputDir=work_dir,
-        removeRefSubFiles=True,
-        main_file=main_file,
-        oneSimPerDir=True,
-    )
+    with open("fastfiles.log", "w") as f, RedirectStdout(f):
+        # --- Generating all files in a workdir
+        fastfiles = case_gen.templateReplace(
+            params,
+            ref_dir,
+            outputDir=work_dir,
+            removeRefSubFiles=True,
+            main_file=main_file,
+            oneSimPerDir=True,
+        )
 
-    turb_sim_inflow(config, fastfiles, wind_speeds, turb_ints)
+        turb_sim_inflow(config, fastfiles, wind_speeds, turb_ints)
+
+
+def generate_turb_sim_bts():
+    config_path = Path(__file__).parent
+    config = yaml_load(config_path / "case_gen_config.yaml")
+
+    # # Output folder (will be created)
+    work_dir = Path(config["case"]["case_dir"])
+
+    turbsim_exe = config["case"]["turbsim_exe"]
+
+    fastfiles = sorted(work_dir.glob("*/*.fst"))
+
+    with open("turb_sim.log", "w") as f, RedirectStdout(f):
+        for fastfile in fastfiles:
+            turb_file_name = get_turb_sim_input_path(fastfile)
+
+            case_path = Path(fastfile).parent
+            turb_file_path = str(case_path / "Aventa" / turb_file_name)
+
+            runner.run_cmd(
+                turb_file_path,
+                turbsim_exe,
+                wait=True,
+                showOutputs=True,
+                showCommand=True,
+            )
+
+
+def run_simulations():
+    pass
+
+
+def get_turb_sim_input_path(fastfile: list[str | Path]) -> str | Path:
+    fast_input_path = Path(fastfile)
+    fast_input = FASTInputFile(fast_input_path)
+
+    inflow_file_path = str(
+        fast_input_path.parent / fast_input["InflowFile"].strip('"')
+    )
+    inflow_file = FASTInputFile(inflow_file_path)
+
+    return f"{Path(inflow_file['Filename']).with_suffix('')}.inp"
 
 
 def plot_distributions(

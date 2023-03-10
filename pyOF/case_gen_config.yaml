@@ -4,8 +4,8 @@ case:
   ref_dir: /home/florian/Projects/openfast-scripts/aventa_ref_dir/ref_folder
   case_dir: /home/florian/Projects/openfast-scripts/aventa_ref_dir/power_curve
   main_file: runAventa.fst
-  fast_exe:
-  turbsim_exe:
+  fast_exe: /home/florian/miniconda3/envs/openfast_env/bin/openfast
+  turbsim_exe: /home/florian/miniconda3/envs/openfast_env/bin/turbsim
   inputs:
     seed: 20230307
     turbine:
@@ -21,4 +21,4 @@ case:
       yaw_error:
         mean: 0.0
         sd: 5.0
-    n_inputs: 4
+    n_inputs: 1

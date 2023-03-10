@@ -57,6 +57,6 @@ venv_*
 .spyderproject
 .spyproject
 
-
+*.log
 *.csv
 *.nc

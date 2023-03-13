@@ -21,4 +21,4 @@ case:
       yaw_error:
         mean: 0.0
         sd: 5.0
-    n_inputs: 1
+    n_inputs: 10

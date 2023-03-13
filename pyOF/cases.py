@@ -229,7 +229,7 @@ def get_turb_sim_input_path(fastfile: list[str | Path]) -> str | Path:
     )
     inflow_file = FASTInputFile(inflow_file_path)
 
-    return f"{Path(inflow_file['Filename']).with_suffix('')}.inp"
+    return f"{Path(inflow_file['Filename_BTS']).with_suffix('')}.inp"
 
 
 def plot_distributions(

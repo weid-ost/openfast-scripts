@@ -166,7 +166,7 @@ def generate_power_curve_case():
         p = base_dict.copy()
 
         p[
-            "InflowFile|Filename"
+            "InflowFile|Filename_BTS"
         ] = f"Wind/_TURBSIM_INPUTS_{wind_speed:.1f}_{turb_int:.1f}.bts"
         p["InflowFile|m/s"] = Decimal(wind_speed) * 1
         p["InflowFile|PropagationDir"] = Decimal(yaw_error) * 1

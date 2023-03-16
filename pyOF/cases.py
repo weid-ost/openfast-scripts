@@ -193,7 +193,7 @@ def generate_turb_sim_bts():
     config_path = Path(__file__).parent
     config = yaml_load(config_path / "case_gen_config.yaml")
 
-    # # Output folder (will be created)
+    # Output folder (will be created)
     work_dir = Path(config["case"]["case_dir"])
 
     turbsim_exe = config["case"]["turbsim_exe"]
@@ -217,7 +217,17 @@ def generate_turb_sim_bts():
 
 
 def run_simulations():
-    pass
+    config_path = Path(__file__).parent
+    config = yaml_load(config_path / "case_gen_config.yaml")
+
+    fast_exe = config["case"]["fast_exe"]
+
+    work_dir = Path(config["case"]["case_dir"])
+    fastfiles = [str(path) for path in sorted(work_dir.glob("*/*.fst"))]
+
+    runner.run_fastfiles(
+        fastfiles, fastExe=fast_exe, parallel=True, showOutputs=False
+    )
 
 
 def get_turb_sim_input_path(fastfile: list[str | Path]) -> str | Path:

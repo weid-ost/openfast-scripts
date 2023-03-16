@@ -64,3 +64,4 @@ only-include = ["pyOF"]
 [project.scripts]
 generate_power_curve_case = "pyOF.cases:generate_power_curve_case"
 generate_turb_sim_bts = "pyOF.cases:generate_turb_sim_bts"
+run_simulations = "pyOF.cases:run_simulations"

@@ -8,7 +8,7 @@ readme = "README.rst"
 requires-python = ">=3.10.6"
 authors = [{ name = "Florian Hammer", email = "florian.hammer@ost.ch" }]
 maintainers = [{ name = "Florian Hammer", email = "florian.hammer@ost.ch" }]
-dependencies = ["netCDF4", "pandas", "numpy", "pyFAST"]
+dependencies = ["netCDF4", "pandas", "numpy", "pyyaml"]
 description = "Placeholder for brief description"
 copyright = "OST Ostschweizer Fachhochschule"
 license = { file = "LICENSE" }
@@ -65,3 +65,4 @@ only-include = ["pyOF"]
 generate_power_curve_case = "pyOF.cases:generate_power_curve_case"
 generate_turb_sim_bts = "pyOF.cases:generate_turb_sim_bts"
 run_simulations = "pyOF.cases:run_simulations"
+create_10min_ave = "pyOF.scada:create_10min_ave"

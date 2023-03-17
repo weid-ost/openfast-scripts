@@ -4,12 +4,13 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import pyFAST.case_generation.case_gen as case_gen
 import pyFAST.case_generation.runner as runner
 from pyFAST.input_output import FASTInputFile
 from scipy.stats import norm, qmc, weibull_min
 
-from pyOF.utils import RedirectStdout, yaml_load
+from pyOF.utils import RedirectStdout, circmean_deg, yaml_load
 
 
 def yaw_misalignment():
@@ -226,7 +227,7 @@ def run_simulations():
     fastfiles = [str(path) for path in sorted(work_dir.glob("*/*.fst"))]
 
     runner.run_fastfiles(
-        fastfiles, fastExe=fast_exe, parallel=True, showOutputs=False
+        fastfiles, fastExe=fast_exe, parallel=True, showOutputs=True
     )
 
 

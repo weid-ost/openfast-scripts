@@ -1,6 +1,8 @@
 import sys
 from pathlib import Path
 from typing import TextIO
+import numpy as np
+from scipy.stats import circmean
 
 import yaml
 
@@ -38,3 +40,8 @@ class RedirectStdout:
 
     def __exit__(self, *args, **kwargs):
         sys.stdout = self.save_stdout
+
+
+def circmean_deg(x):
+    x_rad = x / 180.0 * np.pi
+    return circmean(x_rad) / np.pi * 180.0

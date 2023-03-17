@@ -212,7 +212,6 @@ def generate_turb_sim_bts():
     runner.run_cmds(
         turb_file_paths,
         turbsim_exe,
-        wait=True,
         showOutputs=True,
         showCommand=True,
     )

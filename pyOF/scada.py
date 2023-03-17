@@ -5,6 +5,7 @@ import pandas as pd
 from pyOF.utils import yaml_load
 
 
+# TODO: Parallelise with multiprocessing library
 def create_10min_ave():
     config_path = Path(__file__).parent
     config = yaml_load(config_path / "case_gen_config.yaml")

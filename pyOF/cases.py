@@ -200,21 +200,22 @@ def generate_turb_sim_bts():
     turbsim_exe = config["case"]["turbsim_exe"]
 
     fastfiles = sorted(work_dir.glob("*/*.fst"))
+    turb_file_paths = []
 
     with open("turb_sim.log", "w") as f, RedirectStdout(f):
         for fastfile in fastfiles:
             turb_file_name = get_turb_sim_input_path(fastfile)
 
             case_path = Path(fastfile).parent
-            turb_file_path = str(case_path / "Aventa" / turb_file_name)
+            turb_file_paths.append(str(case_path / "Aventa" / turb_file_name))
 
-            runner.run_cmd(
-                turb_file_path,
-                turbsim_exe,
-                wait=True,
-                showOutputs=True,
-                showCommand=True,
-            )
+    runner.run_cmds(
+        turb_file_paths,
+        turbsim_exe,
+        wait=True,
+        showOutputs=True,
+        showCommand=True,
+    )
 
 
 def run_simulations():

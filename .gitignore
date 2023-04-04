@@ -60,3 +60,4 @@ venv_*
 *.log
 *.csv
 *.nc
+*.pkl

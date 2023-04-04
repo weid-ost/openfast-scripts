@@ -7,7 +7,7 @@ case:
   fast_exe: /home/florian/miniconda3/envs/openfast_env/bin/openfast
   turbsim_exe: /home/florian/miniconda3/envs/openfast_env/bin/turbsim
   inputs:
-    seed: 20230307
+    seed: 20230317
     turbine:
       cut_in: 2.0
       cut_out: 14.0
@@ -21,4 +21,4 @@ case:
       yaw_error:
         mean: 0.0
         sd: 5.0
-    n_inputs: 1
+    n_inputs: 128

@@ -152,7 +152,7 @@ def generate_power_curve_case():
 
     wind_speeds, yaw_errors, turb_ints = simulation_input(config)
 
-    plot_distributions(wind_speeds, yaw_errors, turb_ints)
+    plot_distributions(wind_speeds, yaw_errors, turb_ints, bins=20)
 
     # # --- Defining the parametric study  (list of dictionaries with keys as FAST parameters)
     base_dict = {}
@@ -244,10 +244,24 @@ def get_turb_sim_input_path(fastfile: list[str | Path]) -> str | Path:
 
 
 def plot_distributions(
-    wind_speed: list[float], yaw_error: list[float], turb_int: list[float]
+    wind_speed: list[float],
+    yaw_error: list[float],
+    turb_int: list[float],
+    bins: int | str | list = None,
 ) -> None:
-    _, axes = plt.subplots(3, 1, figsize=(10, 10))
-    axes[0].hist(wind_speed)
-    axes[1].hist(yaw_error)
-    axes[2].hist(turb_int)
+    _, axes = plt.subplots(3, 1, figsize=(10, 10), sharey=True)
+    axes[0].hist(wind_speed, bins=bins)
+    axes[1].hist(yaw_error, bins=bins)
+    axes[2].hist(turb_int, bins=bins)
+
+    axes[0].set_xlabel("Wind speed [m/s]")
+    axes[1].set_xlabel("Yaw misalignment [deg]")
+    axes[2].set_xlabel("Turbulence intensity [%]")
+
+    axes[0].set_ylabel("Frequency")
+    axes[1].set_ylabel("Frequency")
+    axes[2].set_ylabel("Frequency")
+
+    plt.tight_layout()
+
     plt.savefig("plots/distributions.png", dpi=300)

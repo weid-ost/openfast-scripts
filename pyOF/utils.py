@@ -3,8 +3,28 @@ from pathlib import Path
 from typing import TextIO
 import numpy as np
 from scipy.stats import circmean
-
 import yaml
+
+from dynaconf import Dynaconf
+
+from . import __config_filepath__
+
+cfg = Dynaconf(
+    envvar_prefix="PYOF_SCRIPTS",
+    settings_files=[
+        __config_filepath__,
+    ],
+)
+
+
+def get_default_cfg():
+    return cfg
+
+
+def set_cfg(new_cfg: dict):
+    global cfg
+    cfg = get_default_cfg()
+    cfg.update(new_cfg)
 
 
 def yaml_load(file_path: str | Path) -> dict:

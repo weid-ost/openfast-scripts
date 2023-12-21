@@ -1,0 +1,65 @@
+------- ELASTODYN V1.00.* INDIVIDUAL BLADE INPUT FILE --------------------------
+Aventa wind turbine blade input properties.
+---------------------- BLADE PARAMETERS ----------------------------------------
+         31   NBlInpSt    - Number of blade input stations (-)
+        0.1   BldFlDmp(1) - Blade flap mode #1 structural damping in percent of critical (%)
+        0.1   BldFlDmp(2) - Blade flap mode #2 structural damping in percent of critical (%)
+        0.1   BldEdDmp(1) - Blade edge mode #1 structural damping in percent of critical (%)
+---------------------- BLADE ADJUSTMENT FACTORS --------------------------------
+          1   FlStTunr(1) - Blade flapwise modal stiffness tuner, 1st mode (-)
+          1   FlStTunr(2) - Blade flapwise modal stiffness tuner, 2nd mode (-)
+          1   AdjBlMs     - Factor to adjust blade mass density (-) 
+          1   AdjFlSt     - Factor to adjust blade flap stiffness (-)
+          1   AdjEdSt     - Factor to adjust blade edge stiffness (-)
+---------------------- DISTRIBUTED BLADE PROPERTIES ----------------------------
+    BlFract      PitchAxis      StrcTwst       BMassDen        FlpStff        EdgStff
+      (-)           (-)          (deg)          (kg/m)         (Nm^2)         (Nm^2)
+      0.0         2.50E-01    11.860157       33.095        1.5808E+06      1.5808E+06
+      0.033       2.50E-01    11.860157       33.095        1.5808E+06      1.5808E+06
+      0.066       2.50E-01    11.860157       34.878        1.7011E+06      1.7782E+06
+      0.1         2.50E-01    12.005801       36.39         1.8120E+06      2.9046E+06
+      0.133       2.50E-01    11.963185       38.026        2.0127E+06      6.3023E+06
+      0.166       2.50E-01    11.265665       37.975        1.9800E+06      6.3131E+06
+      0.2         2.50E-01    10.568211       33.083        1.6803E+06      6.0402E+06
+      0.233       2.50E-01    9.683917        27.111        1.3225E+06      5.4131E+06
+      0.266       2.50E-01    8.853993        13.381        3.9821E+04      9.3750E+05
+      0.3         2.50E-01    7.780154        12.985        3.6738E+04      7.3135E+05
+      0.333       2.50E-01    6.750275        12.656        1.9966E+04      5.4976E+05
+      0.366       2.50E-01    5.66893         12.316        1.4171E+04      7.5961E+05
+      0.4         2.50E-01    5.517949        12.048        2.9163E+04      6.3056E+05
+      0.433       2.50E-01    5.354716        11.778        7.7371E+03      4.1784E+05
+      0.466       2.50E-01    5.182469        11.503        1.3806E+04      4.4411E+05
+      0.5         2.50E-01    5.001168        11.216        1.3148E+04      3.5011E+05
+      0.533       2.50E-01    4.807143        10.925        1.2250E+04      2.9936E+05
+      0.566       2.50E-01    4.601812        10.608        9.7632E+03      4.2688E+05
+      0.6         2.50E-01    4.38246         10.285        8.4554E+03      2.7310E+05
+      0.633       2.50E-01    4.147555        9.9365        1.7025E+04      1.9808E+05
+      0.666       2.50E-01    3.896213        9.5717        1.7880E+03      4.3139E+05
+      0.7         2.50E-01    3.626552        9.1943        7.5641E+03      3.8929E+05
+      0.733       2.50E-01    3.357213        8.8028        1.3820E+04      1.2716E+05
+      0.766       2.50E-01    3.020628        8.4003        1.8167E+03      2.6951E+05
+      0.8         2.50E-01    2.686688        7.9789        7.1054E+03      1.0796E+05
+      0.833       2.50E-01    2.351796        7.5203        6.3684E+03      6.0679E+04
+      0.866       2.50E-01    1.94668         7.1335        5.3807E+03      8.3198E+04
+      0.9         2.50E-01    1.525945        6.7038        8.9530E+02      1.1420E+05
+      0.933       2.50E-01    1.065259        6.2774        4.5272E+03      2.4312E+04
+      0.966       2.50E-01    0.559098        5.8468        8.4622E+02      6.2985E+04
+      1.0         2.50E-01    0.0             5.4252        3.7388E+03      5.4344E+04
+---------------------- BLADE MODE SHAPES ---------------------------------------
+        0.500   BldFl1Sh(2) - Flap mode 1, coeff of x^2
+       -5.214   BldFl1Sh(3) -            , coeff of x^3
+       17.421   BldFl1Sh(4) -            , coeff of x^4
+      -17.500   BldFl1Sh(5) -            , coeff of x^5
+        5.792   BldFl1Sh(6) -            , coeff of x^6
+       -9.960   BldFl2Sh(2) - Flap mode 2, coeff of x^2
+       90.626   BldFl2Sh(3) -            , coeff of x^3
+     -217.372   BldFl2Sh(4) -            , coeff of x^4
+      189.862   BldFl2Sh(5) -            , coeff of x^5
+      -52.156   BldFl2Sh(6) -            , coeff of x^6
+       -5.167   BldEdgSh(2) - Edge mode 1, coeff of x^2
+       11.337   BldEdgSh(3) -            , coeff of x^3
+      -18.161   BldEdgSh(4) -            , coeff of x^4
+       23.077   BldEdgSh(5) -            , coeff of x^5
+      -10.086   BldEdgSh(6) -            , coeff of x^6
+
+

@@ -1,0 +1,317 @@
+------- ELASTODYN v1.03.* INPUT FILE -------------------------------------------
+Aventa wind turbine ElastoDyn input file
+---------------------- SIMULATION CONTROL --------------------------------------
+False         Echo        - Echo input data to "<RootName>.ech" (flag)
+          3   Method      - Integration method: {1: RK4, 2: AB4, or 3: ABM4} (-)
+"DEFAULT"     DT          - Integration time step (s)
+---------------------- DEGREES OF FREEDOM --------------------------------------
+True          FlapDOF1    - First flapwise blade mode DOF (flag)
+True          FlapDOF2    - Second flapwise blade mode DOF (flag)
+True          EdgeDOF     - First edgewise blade mode DOF (flag)
+False         TeetDOF     - Rotor-teeter DOF (flag) [unused for 3 blades]
+True          DrTrDOF     - Drivetrain rotational-flexibility DOF (flag)
+True          GenDOF      - Generator DOF (flag)
+True          YawDOF      - Yaw DOF (flag)
+True          TwFADOF1    - First fore-aft tower bending-mode DOF (flag)
+True          TwFADOF2    - Second fore-aft tower bending-mode DOF (flag)
+True          TwSSDOF1    - First side-to-side tower bending-mode DOF (flag)
+True          TwSSDOF2    - Second side-to-side tower bending-mode DOF (flag)
+False         PtfmSgDOF   - Platform horizontal surge translation DOF (flag)
+False         PtfmSwDOF   - Platform horizontal sway translation DOF (flag)
+False         PtfmHvDOF   - Platform vertical heave translation DOF (flag)
+False         PtfmRDOF    - Platform roll tilt rotation DOF (flag)
+False         PtfmPDOF    - Platform pitch tilt rotation DOF (flag)
+False         PtfmYDOF    - Platform yaw rotation DOF (flag)
+---------------------- INITIAL CONDITIONS --------------------------------------
+          0   OoPDefl     - Initial out-of-plane blade-tip displacement (meters)
+          0   IPDefl      - Initial in-plane blade-tip deflection (meters)
+          90  BlPitch(1)  - Blade 1 initial pitch (degrees)
+          90  BlPitch(2)  - Blade 2 initial pitch (degrees)
+          90  BlPitch(3)  - Blade 3 initial pitch (degrees) [unused for 2 blades]
+          0   TeetDefl    - Initial or fixed teeter angle (degrees) [unused for 3 blades]
+          0   Azimuth     - Initial azimuth angle for blade 1 (degrees)
+          0   RotSpeed    - Initial or fixed rotor speed (rpm)
+          0   NacYaw      - Initial or fixed nacelle-yaw angle (degrees)
+          0   TTDspFA     - Initial fore-aft tower-top displacement (meters)
+          0   TTDspSS     - Initial side-to-side tower-top displacement (meters)
+          0   PtfmSurge   - Initial or fixed horizontal surge translational displacement of platform (meters)
+          0   PtfmSway    - Initial or fixed horizontal sway translational displacement of platform (meters)
+          0   PtfmHeave   - Initial or fixed vertical heave translational displacement of platform (meters)
+          0   PtfmRoll    - Initial or fixed roll tilt rotational displacement of platform (degrees)
+          0   PtfmPitch   - Initial or fixed pitch tilt rotational displacement of platform (degrees)
+          0   PtfmYaw     - Initial or fixed yaw rotational displacement of platform (degrees)
+---------------------- TURBINE CONFIGURATION -----------------------------------
+          3   NumBl       - Number of blades (-)
+        6.45  TipRad      - The distance from the rotor apex to the blade tip (meters)
+       0.45   HubRad      - The distance from the rotor apex to the blade root (meters)
+          0   PreCone(1)  - Blade 1 cone angle (degrees)
+          0   PreCone(2)  - Blade 2 cone angle (degrees)
+          0   PreCone(3)  - Blade 3 cone angle (degrees) [unused for 2 blades]
+          0   HubCM       - Distance from rotor apex to hub mass [positive downwind] (meters)
+          0   UndSling    - Undersling length [distance from teeter pin to the rotor apex] (meters) [unused for 3 blades]
+          0   Delta3      - Delta-3 angle for teetering rotors (degrees) [unused for 3 blades]
+          0   AzimB1Up    - Azimuth value to use for I/O when blade 1 points up (degrees)
+       -0.98  OverHang    - Distance from yaw axis to rotor apex [3 blades] or teeter pin [2 blades] (meters)
+        0.5   ShftGagL    - Distance from rotor apex [3 blades] or teeter pin [2 blades] to shaft strain gages [positive for upwind rotors] (meters)
+          0   ShftTilt    - Rotor shaft tilt angle (degrees)
+     -0.078   NacCMxn     - Downwind distance from the tower-top to the nacelle CM (meters)
+          0   NacCMyn     - Lateral  distance from the tower-top to the nacelle CM (meters)
+      0.166   NacCMzn     - Vertical distance from the tower-top to the nacelle CM (meters)
+          0   NcIMUxn     - Downwind distance from the tower-top to the nacelle IMU (meters)
+          0   NcIMUyn     - Lateral  distance from the tower-top to the nacelle IMU (meters)
+          0   NcIMUzn     - Vertical distance from the tower-top to the nacelle IMU (meters)
+       0.29   Twr2Shft    - Vertical distance from the tower-top to the rotor shaft (meters)
+         18   TowerHt     - Height of tower above ground level [onshore] or MSL [offshore] (meters)
+          0   TowerBsHt   - Height of tower base above ground level [onshore] or MSL [offshore] (meters)
+          0   PtfmCMxt    - Downwind distance from the ground level [onshore] or MSL [offshore] to the platform CM (meters)
+          0   PtfmCMyt    - Lateral distance from the ground level [onshore] or MSL [offshore] to the platform CM (meters)
+          0   PtfmCMzt    - Vertical distance from the ground level [onshore] or MSL [offshore] to the platform CM (meters)
+          0   PtfmRefzt   - Vertical distance from the ground level [onshore] or MSL [offshore] to the platform reference point (meters)
+---------------------- MASS AND INERTIA ----------------------------------------
+          0   TipMass(1)  - Tip-brake mass, blade 1 (kg)
+          0   TipMass(2)  - Tip-brake mass, blade 2 (kg)
+          0   TipMass(3)  - Tip-brake mass, blade 3 (kg) [unused for 2 blades]
+        120   HubMass     - Hub mass (kg)
+        240   HubIner     - Hub inertia about rotor axis [3 blades] or teeter axis [2 blades] (kg m^2)
+         30   GenIner     - Generator inertia about HSS (kg m^2)
+        700   NacMass     - Nacelle mass (kg)
+       40000  NacYIner    - Nacelle inertia about yaw axis (kg m^2)
+          0   YawBrMass   - Yaw bearing mass (kg)
+          0   PtfmMass    - Platform mass (kg)
+          0   PtfmRIner   - Platform inertia for roll tilt rotation about the platform CM (kg m^2)
+          0   PtfmPIner   - Platform inertia for pitch tilt rotation about the platform CM (kg m^2)
+          0   PtfmYIner   - Platform inertia for yaw rotation about the platform CM (kg m^2)
+---------------------- BLADE ---------------------------------------------------
+         31   BldNodes    - Number of blade nodes (per blade) used for analysis (-)
+"Aventa_ElastoDyn_Blade_1.dat"   BldFile(1)  - Name of file containing properties for blade 1 (quoted string)
+"Aventa_ElastoDyn_Blade_2.dat"   BldFile(2)  - Name of file containing properties for blade 2 (quoted string)
+"Aventa_ElastoDyn_Blade_3.dat"   BldFile(3)  - Name of file containing properties for blade 3 (quoted string) [unused for 2 blades]
+---------------------- ROTOR-TEETER --------------------------------------------
+          0   TeetMod     - Rotor-teeter spring/damper model {0: none, 1: standard, 2: user-defined from routine UserTeet} (switch) [unused for 3 blades]
+          0   TeetDmpP    - Rotor-teeter damper position (degrees) [used only for 2 blades and when TeetMod=1]
+          0   TeetDmp     - Rotor-teeter damping constant (N-m/(rad/s)) [used only for 2 blades and when TeetMod=1]
+          0   TeetCDmp    - Rotor-teeter rate-independent Coulomb-damping moment (N-m) [used only for 2 blades and when TeetMod=1]
+          0   TeetSStP    - Rotor-teeter soft-stop position (degrees) [used only for 2 blades and when TeetMod=1]
+          0   TeetHStP    - Rotor-teeter hard-stop position (degrees) [used only for 2 blades and when TeetMod=1]
+          0   TeetSSSp    - Rotor-teeter soft-stop linear-spring constant (N-m/rad) [used only for 2 blades and when TeetMod=1]
+          0   TeetHSSp    - Rotor-teeter hard-stop linear-spring constant (N-m/rad) [used only for 2 blades and when TeetMod=1]
+---------------------- DRIVETRAIN ----------------------------------------------
+        100   GBoxEff     - Gearbox efficiency (%)
+         12   GBRatio     - Gearbox ratio (-)
+8.67637E+04   DTTorSpr    - Drivetrain torsional spring (N-m/rad)
+  6.215E+03   DTTorDmp    - Drivetrain torsional damper (N-m/(rad/s))
+---------------------- FURLING -------------------------------------------------
+False         Furling     - Read in additional model properties for furling turbine (flag) [must currently be FALSE)
+"unused"      FurlFile    - Name of file containing furling properties (quoted string) [unused when Furling=False]
+---------------------- TOWER ---------------------------------------------------
+         19   TwrNodes    - Number of tower nodes used for analysis (-)
+"Aventa_ElastoDyn_Tower.dat"    TwrFile     - Name of file containing tower properties (quoted string)
+---------------------- OUTPUT --------------------------------------------------
+True          SumPrint    - Print summary data to "<RootName>.sum" (flag)
+          1   OutFile     - Switch to determine where output will be placed: {1: in module output file only; 2: in glue code output file only; 3: both} (currently unused)
+True          TabDelim    - Use tab delimiters in text tabular output file? (flag) (currently unused)
+"ES10.3E2"    OutFmt      - Format used for text tabular output (except time).  Resulting field should be 10 characters. (quoted string) (currently unused)
+          0   TStart      - Time to begin tabular output (s) (currently unused)
+          1   DecFact     - Decimation factor for tabular output {1: output every time step} (-) (currently unused)
+          6   NTwGages    - Number of tower nodes that have strain gages for output [0 to 9] (-)
+          2,  5,  8,  11, 15,  18   TwrGagNd    - List of tower nodes that have strain gages [1 to TwrNodes] (-) [unused if NTwGages=0]
+          9   NBlGages    - Number of blade nodes that have strain gages for output [0 to 9] (-)
+          1,  4,  7,  11, 15,  19, 23,  27, 30   BldGagNd    - List of blade nodes that have strain gages [1 to BldNodes] (-) [unused if NBlGages=0]
+              OutList     - The next line(s) contains a list of output parameters.  See OutListParameters.xlsx for a listing of available output channels, (-)
+"BldPitch1"               - Blade 1 pitch angle
+"BldPitch2"               - Blade 2 pitch angle
+"BldPitch3"               - Blade 3 pitch angle
+"OoPDefl1"                - Blade 1 out-of-plane deflection
+"OoPDefl2"                - Blade 2 out-of-plane deflection
+"OoPDefl3"                - Blade 3 out-of-plane deflection
+"IPDefl1"                 - Blade 1 in-plane deflections 
+"IPDefl2"                 - Blade 2 in-plane deflections 
+"IPDefl3"                 - Blade 3 in-plane deflections 
+"RootMxb1"                - In-plane bending, out-of-plane bending, and pitching moments at the root of blade 1
+"RootMyb1"                - In-plane bending, out-of-plane bending, and pitching moments at the root of blade 1
+"RootMxb2"                - In-plane bending, out-of-plane bending, and pitching moments at the root of blade 2
+"RootMyb2"                - In-plane bending, out-of-plane bending, and pitching moments at the root of blade 2
+"RootMxb3"                - In-plane bending, out-of-plane bending, and pitching moments at the root of blade 3
+"RootMyb3"                - In-plane bending, out-of-plane bending, and pitching moments at the root of blade 3
+"Spn1ALxb1"		  - acceleration: Blade 1 local flapwise acceleration (absolute) of span station 1
+"Spn1ALyb1"		  - acceleration: Blade 1 local edgewise acceleration (absolute) of span station 1
+"Spn2ALxb1"		  - acceleration: Blade 1 local flapwise acceleration (absolute) of span station 2
+"Spn2ALyb1"		  - acceleration: Blade 1 local edgewise acceleration (absolute) of span station 2
+"Spn3ALxb1"		  - acceleration: Blade 1 local flapwise acceleration (absolute) of span station 3
+"Spn3ALyb1"		  - acceleration: Blade 1 local edgewise acceleration (absolute) of span station 3
+"Spn4ALxb1"		  - acceleration: Blade 1 local flapwise acceleration (absolute) of span station 4
+"Spn4ALyb1"		  - acceleration: Blade 1 local edgewise acceleration (absolute) of span station 4
+"Spn5ALxb1"		  - acceleration: Blade 1 local flapwise acceleration (absolute) of span station 5
+"Spn5ALyb1"		  - acceleration: Blade 1 local edgewise acceleration (absolute) of span station 5
+"Spn6ALxb1"		  - acceleration: Blade 1 local flapwise acceleration (absolute) of span station 6
+"Spn6ALyb1"		  - acceleration: Blade 1 local edgewise acceleration (absolute) of span station 6
+"Spn7ALxb1"		  - acceleration: Blade 1 local flapwise acceleration (absolute) of span station 7
+"Spn7ALyb1"		  - acceleration: Blade 1 local edgewise acceleration (absolute) of span station 7
+"Spn8ALxb1"		  - acceleration: Blade 1 local flapwise acceleration (absolute) of span station 8
+"Spn8ALyb1"		  - acceleration: Blade 1 local edgewise acceleration (absolute) of span station 8
+"Spn9ALxb1"		  - acceleration: Blade 1 local flapwise acceleration (absolute) of span station 9
+"Spn9ALyb1"		  - acceleration: Blade 1 local edgewise acceleration (absolute) of span station 9
+"Spn1MLxb1"		  - Bending Mome: Blade 1 local edgewise moment at span station 1
+"Spn1MLyb1"		  - Bending Mome: Blade 1 local flapwise moment at span station 1
+"Spn2MLxb1"		  - Bending Mome: Blade 1 local edgewise moment at span station 2
+"Spn2MLyb1"		  - Bending Mome: Blade 1 local flapwise moment at span station 2
+"Spn3MLxb1"		  - Bending Mome: Blade 1 local edgewise moment at span station 3
+"Spn3MLyb1"		  - Bending Mome: Blade 1 local flapwise moment at span station 3
+"Spn4MLxb1"		  - Bending Mome: Blade 1 local edgewise moment at span station 4
+"Spn4MLyb1"		  - Bending Mome: Blade 1 local flapwise moment at span station 4
+"Spn5MLxb1"		  - Bending Mome: Blade 1 local edgewise moment at span station 5
+"Spn5MLyb1"		  - Bending Mome: Blade 1 local flapwise moment at span station 5
+"Spn6MLxb1"		  - Bending Mome: Blade 1 local edgewise moment at span station 6
+"Spn6MLyb1"		  - Bending Mome: Blade 1 local flapwise moment at span station 6
+"Spn7MLxb1"		  - Bending Mome: Blade 1 local edgewise moment at span station 7
+"Spn7MLyb1"		  - Bending Mome: Blade 1 local flapwise moment at span station 7
+"Spn8MLxb1"		  - Bending Mome: Blade 1 local edgewise moment at span station 8
+"Spn8MLyb1"		  - Bending Mome: Blade 1 local flapwise moment at span station 8
+"Spn9MLxb1"		  - Bending Mome: Blade 1 local edgewise moment at span station 9
+"Spn9MLyb1"		  - Bending Mome: Blade 1 local flapwise moment at span station 9
+"Spn1ALxb2"		  - acceleration: Blade 2 local flapwise acceleration (absolute) of span station 1
+"Spn1ALyb2"		  - acceleration: Blade 2 local edgewise acceleration (absolute) of span station 1
+"Spn2ALxb2"		  - acceleration: Blade 2 local flapwise acceleration (absolute) of span station 2
+"Spn2ALyb2"		  - acceleration: Blade 2 local edgewise acceleration (absolute) of span station 2
+"Spn3ALxb2"		  - acceleration: Blade 2 local flapwise acceleration (absolute) of span station 3
+"Spn3ALyb2"		  - acceleration: Blade 2 local edgewise acceleration (absolute) of span station 3
+"Spn4ALxb2"		  - acceleration: Blade 2 local flapwise acceleration (absolute) of span station 4
+"Spn4ALyb2"		  - acceleration: Blade 2 local edgewise acceleration (absolute) of span station 4
+"Spn5ALxb2"		  - acceleration: Blade 2 local flapwise acceleration (absolute) of span station 5
+"Spn5ALyb2"		  - acceleration: Blade 2 local edgewise acceleration (absolute) of span station 5
+"Spn6ALxb2"		  - acceleration: Blade 2 local flapwise acceleration (absolute) of span station 6
+"Spn6ALyb2"		  - acceleration: Blade 2 local edgewise acceleration (absolute) of span station 6
+"Spn7ALxb2"		  - acceleration: Blade 2 local flapwise acceleration (absolute) of span station 7
+"Spn7ALyb2"		  - acceleration: Blade 2 local edgewise acceleration (absolute) of span station 7
+"Spn8ALxb2"		  - acceleration: Blade 2 local flapwise acceleration (absolute) of span station 8
+"Spn8ALyb2"		  - acceleration: Blade 2 local edgewise acceleration (absolute) of span station 8
+"Spn9ALxb2"		  - acceleration: Blade 2 local flapwise acceleration (absolute) of span station 9
+"Spn9ALyb2"		  - acceleration: Blade 2 local edgewise acceleration (absolute) of span station 9
+"Spn1MLxb2"		  - Bending Mome: Blade 2 local edgewise moment at span station 1
+"Spn1MLyb2"		  - Bending Mome: Blade 2 local flapwise moment at span station 1
+"Spn2MLxb2"		  - Bending Mome: Blade 2 local edgewise moment at span station 2
+"Spn2MLyb2"		  - Bending Mome: Blade 2 local flapwise moment at span station 2
+"Spn3MLxb2"		  - Bending Mome: Blade 2 local edgewise moment at span station 3
+"Spn3MLyb2"		  - Bending Mome: Blade 2 local flapwise moment at span station 3
+"Spn4MLxb2"		  - Bending Mome: Blade 2 local edgewise moment at span station 4
+"Spn4MLyb2"		  - Bending Mome: Blade 2 local flapwise moment at span station 4
+"Spn5MLxb2"		  - Bending Mome: Blade 2 local edgewise moment at span station 5
+"Spn5MLyb2"		  - Bending Mome: Blade 2 local flapwise moment at span station 5
+"Spn6MLxb2"		  - Bending Mome: Blade 2 local edgewise moment at span station 6
+"Spn6MLyb2"		  - Bending Mome: Blade 2 local flapwise moment at span station 6
+"Spn7MLxb2"		  - Bending Mome: Blade 2 local edgewise moment at span station 7
+"Spn7MLyb2"		  - Bending Mome: Blade 2 local flapwise moment at span station 7
+"Spn8MLxb2"		  - Bending Mome: Blade 2 local edgewise moment at span station 8
+"Spn8MLyb2"		  - Bending Mome: Blade 2 local flapwise moment at span station 8
+"Spn9MLxb2"		  - Bending Mome: Blade 2 local edgewise moment at span station 9
+"Spn9MLyb2"		  - Bending Mome: Blade 2 local flapwise moment at span station 9
+"Spn1ALxb3"		  - acceleration: Blade 3 local flapwise acceleration (absolute) of span station 1
+"Spn1ALyb3"		  - acceleration: Blade 3 local edgewise acceleration (absolute) of span station 1
+"Spn2ALxb3"		  - acceleration: Blade 3 local flapwise acceleration (absolute) of span station 2
+"Spn2ALyb3"		  - acceleration: Blade 3 local edgewise acceleration (absolute) of span station 2
+"Spn3ALxb3"		  - acceleration: Blade 3 local flapwise acceleration (absolute) of span station 3
+"Spn3ALyb3"		  - acceleration: Blade 3 local edgewise acceleration (absolute) of span station 3
+"Spn4ALxb3"		  - acceleration: Blade 3 local flapwise acceleration (absolute) of span station 4
+"Spn4ALyb3"		  - acceleration: Blade 3 local edgewise acceleration (absolute) of span station 4
+"Spn5ALxb3"		  - acceleration: Blade 3 local flapwise acceleration (absolute) of span station 5
+"Spn5ALyb3"		  - acceleration: Blade 3 local edgewise acceleration (absolute) of span station 5
+"Spn6ALxb3"		  - acceleration: Blade 3 local flapwise acceleration (absolute) of span station 6
+"Spn6ALyb3"		  - acceleration: Blade 3 local edgewise acceleration (absolute) of span station 6
+"Spn7ALxb3"		  - acceleration: Blade 3 local flapwise acceleration (absolute) of span station 7
+"Spn7ALyb3"		  - acceleration: Blade 3 local edgewise acceleration (absolute) of span station 7
+"Spn8ALxb3"		  - acceleration: Blade 3 local flapwise acceleration (absolute) of span station 8
+"Spn8ALyb3"		  - acceleration: Blade 3 local edgewise acceleration (absolute) of span station 8
+"Spn9ALxb3"		  - acceleration: Blade 3 local flapwise acceleration (absolute) of span station 9
+"Spn9ALyb3"		  - acceleration: Blade 3 local edgewise acceleration (absolute) of span station 9
+"Spn1MLxb3"		  - Bending Mome: Blade 3 local edgewise moment at span station 1
+"Spn1MLyb3"		  - Bending Mome: Blade 3 local flapwise moment at span station 1
+"Spn2MLxb3"		  - Bending Mome: Blade 3 local edgewise moment at span station 2
+"Spn2MLyb3"		  - Bending Mome: Blade 3 local flapwise moment at span station 2
+"Spn3MLxb3"		  - Bending Mome: Blade 3 local edgewise moment at span station 3
+"Spn3MLyb3"		  - Bending Mome: Blade 3 local flapwise moment at span station 3
+"Spn4MLxb3"		  - Bending Mome: Blade 3 local edgewise moment at span station 4
+"Spn4MLyb3"		  - Bending Mome: Blade 3 local flapwise moment at span station 4
+"Spn5MLxb3"		  - Bending Mome: Blade 3 local edgewise moment at span station 5
+"Spn5MLyb3"		  - Bending Mome: Blade 3 local flapwise moment at span station 5
+"Spn6MLxb3"		  - Bending Mome: Blade 3 local edgewise moment at span station 6
+"Spn6MLyb3"		  - Bending Mome: Blade 3 local flapwise moment at span station 6
+"Spn7MLxb3"		  - Bending Mome: Blade 3 local edgewise moment at span station 7
+"Spn7MLyb3"		  - Bending Mome: Blade 3 local flapwise moment at span station 7
+"Spn8MLxb3"		  - Bending Mome: Blade 3 local edgewise moment at span station 8
+"Spn8MLyb3"		  - Bending Mome: Blade 3 local flapwise moment at span station 8
+"Spn9MLxb3"		  - Bending Mome: Blade 3 local edgewise moment at span station 9
+"Spn9MLyb3"		  - Bending Mome: Blade 3 local flapwise moment at span station 9
+"LSSGagMya"               - (Rotating) Rotor low-speed shaft tilting bending moments at the main bearing
+"LSSGagMza"               - (Rotating) Rotor low-speed shaft yaw bending moments at the main bearing
+"YawBrMyp"                - Nonrotating tower-top / yaw bearing pitch moment, fore-aft (tilt moment)
+"YawBrMzp"                - Tower-top / yaw bearing yaw moment
+"YawBrTAxp"		  - Tower-top / yaw bearing fore-aft (translational) acceleration (absolute)
+"YawBrTAyp"		  - Tower-top / yaw bearing side-to-side (translational) acceleration (absolute)
+"YawBrTDxt"	          - Fore-aft, Tower-top / yaw bearing fore-aft (translational) deflection (relative to the undeflected position)	Directed along the xt-axis	(m)
+"YawBrTDyt"               - Side-side, Tower-top / yaw bearing side-to-side (translation) deflection (relative to the undeflected position)	Directed along the yt-axis	(m)
+"YawBrTDzt"		  - Longitudinal, Tower-top / yaw bearing axial (translational) deflection (relative to the undeflected position)	Directed along the zt-axis	(m)
+"YawBrRDxt"	          - TTDspRoll	Tower-top / yaw bearing angular (rotational) roll deflection (relative to the undeflected position). About the xt-axis	(deg)
+"YawBrRDyt"	          - TTDspPtch	Tower-top / yaw bearing angular (rotational) pitch deflection (relative to the undeflected position). About the yt-axis	(deg)
+"YawBrRDzt"	          - TTDspTwst	Tower-top / yaw bearing angular (rotational) torsion deflection (relative to the undeflected position). About the zt-axis	(deg)
+"TwrBsMxt"                - Side-to-side bending moments at the base of the tower (mudline)
+"TwrBsMyt"                - Fore-aft bending moments at the base of the tower (mudline)
+"TwHt1ALxt"		  - acceleration: Local tower fore-aft (translational) acceleration (absolute) of tower gage 1 
+"TwHt1ALyt"		  - acceleration: Local tower side-to-side (translational) acceleration (absolute) of tower gage 1 
+"TwHt2ALxt"		  - acceleration: Local tower fore-aft (translational) acceleration (absolute) of tower gage 2 
+"TwHt2ALyt"		  - acceleration: Local tower side-to-side (translational) acceleration (absolute) of tower gage 2 
+"TwHt3ALxt"		  - acceleration: Local tower fore-aft (translational) acceleration (absolute) of tower gage 3 
+"TwHt3ALyt"		  - acceleration: Local tower side-to-side (translational) acceleration (absolute) of tower gage 3 
+"TwHt4ALxt"		  - acceleration: Local tower fore-aft (translational) acceleration (absolute) of tower gage 4 
+"TwHt4ALyt"		  - acceleration: Local tower side-to-side (translational) acceleration (absolute) of tower gage 4 
+"TwHt5ALxt"		  - acceleration: Local tower fore-aft (translational) acceleration (absolute) of tower gage 5 
+"TwHt5ALyt"		  - acceleration: Local tower side-to-side (translational) acceleration (absolute) of tower gage 5 
+"TwHt6ALxt"		  - acceleration: Local tower fore-aft (translational) acceleration (absolute) of tower gage 6 
+"TwHt6ALyt"		  - acceleration: Local tower side-to-side (translational) acceleration (absolute) of tower gage 6 
+"TwHt1MLxt"		  - Bending Mome: Local tower roll (or side-to-side) moment of tower gage 1
+"TwHt1MLyt"		  - Bending Mome: Local tower pitching (or fore-aft) moment of tower gage 1
+"TwHt1MLzt"		  - Bending Mome: Local tower yaw (or torsional) moment of tower gage 1
+"TwHt2MLxt"		  - Bending Mome: Local tower roll (or side-to-side) moment of tower gage 2
+"TwHt2MLyt"		  - Bending Mome: Local tower pitching (or fore-aft) moment of tower gage 2
+"TwHt2MLzt"		  - Bending Mome: Local tower yaw (or torsional) moment of tower gage 2
+"TwHt3MLxt"		  - Bending Mome: Local tower roll (or side-to-side) moment of tower gage 3
+"TwHt3MLyt"		  - Bending Mome: Local tower pitching (or fore-aft) moment of tower gage 3
+"TwHt3MLzt"		  - Bending Mome: Local tower yaw (or torsional) moment of tower gage 3
+"TwHt4MLxt"		  - Bending Mome: Local tower roll (or side-to-side) moment of tower gage 4
+"TwHt4MLyt"		  - Bending Mome: Local tower pitching (or fore-aft) moment of tower gage 4
+"TwHt4MLzt"		  - Bending Mome: Local tower yaw (or torsional) moment of tower gage 4
+"TwHt5MLxt"		  - Bending Mome: Local tower roll (or side-to-side) moment of tower gage 5
+"TwHt5MLyt"		  - Bending Mome: Local tower pitching (or fore-aft) moment of tower gage 5
+"TwHt5MLzt"		  - Bending Mome: Local tower yaw (or torsional) moment of tower gage 5
+"TwHt6MLxt"		  - Bending Mome: Local tower roll (or side-to-side) moment of tower gage 6
+"TwHt6MLyt"		  - Bending Mome: Local tower pitching (or fore-aft) moment of tower gage 6
+"TwHt6MLzt"		  - Bending Mome: Local tower yaw (or torsional) moment of tower gage 6
+"RotSpeed"                - Low-speed shaft speed
+"LSShftMxa"	          - Low-speed shaft torque (this is constant along the shaft and is equivalent to the rotor torque)
+"GenSpeed"                - High-speed shaft speeds
+"Azimuth"		  - Rotor azimuth position
+END of input file (the word "END" must appear in the first 3 columns of this last OutList line)
+---------------------- NODE OUTPUTS --------------------------------------------
+          3   BldNd_BladesOut  - Blades to output
+         99   BldNd_BlOutNd   - Blade nodes on each blade (currently unused)
+              OutList     - The next line(s) contains a list of output parameters.  See OutListParameters.xlsx, ElastoDyn_Nodes tab for a listing of available output channels, (-)
+"ALx"    -  local flapwise acceleration (absolute) of node
+"ALy"    - local flapwise acceleration (absolute) of node
+"ALz"    - local flapwise acceleration (absolute) of node
+"TDx"    - local flapwise (translational) deflection (relative to the undeflected position) of node
+"TDy"    - local edgewise (translational) deflection (relative to the undeflected position) of node
+"TDz"    - local axial (translational) deflection (relative to the undeflected position) of node
+"RDx"    - Local rotational displacement about x-axis (relative to undeflected)
+"RDy"    - Local rotational displacement about y-axis (relative to undeflected)
+"RDz"    - Local rotational displacement about z-axis (relative to undeflected)
+"MLx"    - local edgewise moment at node
+"MLy"    - local flapwise moment at node
+"MLz"    - local pitching moment at node
+"FLx"    - local flapwise shear force at node
+"FLy"    - local edgewise shear force at node
+"FLz"    - local axial force at node
+"MLxNT"  - Edgewise moment in local coordinate system (initial structural twist removed)
+"MlyNT"  - Flapwise shear moment in local coordinate system (initial structural twist removed)
+"FLxNT"  - Flapwise shear force in local coordinate system (initial structural twist removed)
+"FlyNT"  - Edgewise shear force in local coordinate system (initial structural twist removed)
+END of input file (the word "END" must appear in the first 3 columns of this last OutList line)
+---------------------------------------------------------------------------------------

@@ -16,14 +16,17 @@ Installation
     use a python virtual environment for installation. See
     `Virtual environments`_ below.
 
-You can install the latest version of the library from its repository
-
+The easiest way to use the scripts within this library is to download the whole repository and then execute
 ::
 
-    pip install "git+https://github.com/weid-ost/openfast-scripts.git"
+    pip install -e .
+
+``openfast-scripts`` depends on the package ``openfast_toolbox`` (https://github.com/OpenFAST/openfast_toolbox).
+Follow the package installation instructions for further details.
 
 Usage
 -------
+The library is structured as shown in the following:
 
 .. code-block:: text
 
@@ -39,7 +42,7 @@ Usage
    |--run.sh
    |--run.py
 
-``case_gen_config.yaml`` contains the information about your OpenFAST installation and the case generation.
+``case_gen_config.yaml`` contains the information about your OpenFAST installation and the case generation and currently needs to be located in the ``pyOF/`` folder.
 
 .. code-block:: yaml
 
@@ -68,7 +71,7 @@ Usage
             sd: 5.0
         n_inputs: 128
   
-``ref_dir`` point to the path of your base OpenFAST simulation setup, from which the different cases will be generated.
+``ref_dir`` points to the path of your base OpenFAST simulation setup, from which the different cases will be derived and generated.
 In the ``case_dir`` folder the generated cases will be written out. 
 The main OpenFAST file is defined with ``main_file``.
 An example setup is given in the ``tests/`` folder.
@@ -81,11 +84,13 @@ With the ``wind`` fields the distributions for the wind speeds, turbulence inten
 ``n_inputs`` is the number of cases to be created and simulated.
 
 
-In ``pyOF/cases.py`` are the following four functions that should be run in the some order:
+In ``pyOF/cases.py`` are the following four functions that should be run in the same order:
 
-1. ``generate_power_curve_case``
-2. ``generate_turb_sim_bts``
-3. ``run_simulations``
-4. ``create_10min_ave``
+1. ``generate_power_curve_case`` -> Case generation
+2. ``generate_turb_sim_bts``     -> Case generation
+3. ``run_simulations``           -> Simulations (Optional)
+4. ``create_10min_ave``          -> Post-processing (Optional)  
 
+After installing this library (``pip install -e .``), these commands should be now available to be run in a terminal, see ``run.sh``.
+Alternatively, ``run.py`` can be used. 
 

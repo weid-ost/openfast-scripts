@@ -16,27 +16,25 @@ Installation
     use a python virtual environment for installation. See
     `Virtual environments`_ below.
 
-You can install the library from its repository
+You can install the latest version of the library from its repository
 
 ::
 
-    pip install "git+https://gitlab.ost.ch/wiseper/openfast-scripts.git"
+    pip install "git+https://github.com/weid-ost/openfast-scripts.git"
 
-To install the release
+Usage
+-------
 
-::
+.. code-block:: text
 
-   pip install "git+https://gitlab.ost.ch/wiseper/openfast-scripts.git@release"
-
-If you want a specific release replace the word release with the version tag
-
-::
-
-   pip install "git+https://gitlab.ost.ch/wiseper/openfast-scripts.git@v0.2.0"
-
-
-Alternatively, if you have downloaded the library into a folder ``LIBFOLDER`` you can run
-
-::
-
-    pip install LIBFOLDER
+   openfast-scripts/
+   |--pyOF/
+   |  |--case_gen_config.yaml
+   |  |--cases.py
+   |  |--io.py
+   |  |--postpro.py
+   |  |--scada.py
+   |  |--utils.py
+   |  |--wind_input.py
+   |--run.sh
+   |--run.py

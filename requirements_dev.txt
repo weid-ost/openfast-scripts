@@ -4,9 +4,10 @@ pytest-cov
 
 # Linting
 black
+ruff
 
 # Tools for building the package
-setuptools
+hatch
 wheel
 
 # Documentation (if needed)

@@ -9,13 +9,13 @@ requires-python = ">=3.10.6"
 authors = [{ name = "Florian Hammer", email = "florian.hammer@ost.ch" }]
 maintainers = [{ name = "Florian Hammer", email = "florian.hammer@ost.ch" }]
 dependencies = ["netCDF4", "pandas", "matplotlib", "scipy", "numpy", "seaborn", "pyyaml", "dynaconf"]
-description = "Placeholder for brief description"
+description = ""
 copyright = "OST Ostschweizer Fachhochschule"
 license = { file = "LICENSE" }
 dynamic = ["version"]
 
 [project.urls]
-Source = "https://gitlab.ost.ch/wiseper/openfast-scripts"
+Source = "https://giithub.com/weid-ost/openfast-scripts"
 
 
 [project.optional-dependencies]

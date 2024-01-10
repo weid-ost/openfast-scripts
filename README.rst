@@ -13,11 +13,9 @@ Installation
 --------------------
 To avoid collisions with your system's library versions,
 use a python virtual environment for installation. See
-`Virtual Environment Primer`__.
+`Virtual Environment Primer <venv_>`_.
 
  .. _venv: https://realpython.com/python-virtual-environments-a-primer/
-
-__venv_
 
 The easiest way to use the scripts within this library is to download the whole repository and then execute
 ::

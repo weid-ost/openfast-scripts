@@ -11,9 +11,10 @@ Repository for OpenFAST scripts, including
 
 Installation
 --------------------
-To avoid collisions with your system's library versions,
-use a python virtual environment for installation. See
-`Virtual Environment Primer <venv_>`_.
+.. hint::
+    To avoid collisions with your system's library versions,
+    use a python virtual environment for installation. See
+    `Virtual Environment Primer <venv_>`_.
 
  .. _venv: https://realpython.com/python-virtual-environments-a-primer/
 
